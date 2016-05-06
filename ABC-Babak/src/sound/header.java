@@ -41,47 +41,59 @@ public class header {
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
 		String _line;
 		while ((_line = bufferedReader.readLine()) != null) {
-			if (_line.matches("^[CKLMQTXV]:.*$")) {
-				
-				/**
-				 * Initialize the details of Song Header
-				 */
-				switch (_line.charAt(0)) {
-				case 'C':
-					this.composer = _line.substring(2).trim();
-					break;
-				case 'K':
-					this.keySignature = _line.substring(2).trim();
-					break;
-				case 'L':
-					this.noteDuration = _line.substring(2).trim();
-					break;
-				case 'M':
-					this.meter = _line.substring(2).trim();
-					break;
-				case 'Q':
-					this.tempo = Integer.parseInt(_line.substring(2).trim());;
-					break;
-				case 'T':
-					this.title = _line.substring(2).trim();
-					break;
-				case 'X':
-					this.indexNumber = Integer.parseInt(_line.substring(2).trim());;
-					break;
-				default:
-					break;
-				}
-				
-				// Adds Notes to our NoteLine file
-				addNoteLine(_line);				
-			} 
-			// Adds Notes to our NoteLine file
-			else if (_line.matches("[a-gzA-G0-9,=:|\\( \\[\\]\\/_^']*")) {
-				addNoteLine(_line);
-			} 			
+			
+			AnalyzeLine(_line);
+			
 		}
 	}
 
+	/**
+	 * is public only because of testing!!!!!!
+	 * this is method Analyzes the header
+	 * @param _line is each line of header which starts with one of [CKLMQTXV]
+	 * modifies Composer, keySignature , other header info
+	 */
+	private void AnalyzeLine(String _line){
+		if (_line.matches("^[CKLMQTXV]:.*$")) {
+			
+			/**
+			 * Initialize the details of Song Header
+			 */
+			switch (_line.charAt(0)) {
+			case 'C':
+				this.composer = _line.substring(2).trim();
+				break;
+			case 'K':
+				this.keySignature = _line.substring(2).trim();
+				break;
+			case 'L':
+				this.noteDuration = _line.substring(2).trim();
+				break;
+			case 'M':
+				this.meter = _line.substring(2).trim();
+				break;
+			case 'Q':
+				this.tempo = Integer.parseInt(_line.substring(2).trim());;
+				break;
+			case 'T':
+				this.title = _line.substring(2).trim();
+				break;
+			case 'X':
+				this.indexNumber = Integer.parseInt(_line.substring(2).trim());;
+				break;
+			default:
+				break;
+			}
+			
+			// Adds Notes to our NoteLine file
+			addNoteLine(_line);				
+		} 
+		// Adds Notes to our NoteLine file
+		else if (_line.matches("[a-gzA-G0-9,=:|\\( \\[\\]\\/_^']*")) {
+			addNoteLine(_line);
+		} 
+	}
+	
 	
 	public String getComposer() {
 		return composer;
